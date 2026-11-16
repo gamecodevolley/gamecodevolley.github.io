@@ -1,0 +1,344 @@
+<!doctype html>
+<html lang="pt-BR" data-type="software" data-radius="soft" data-ground="sky" data-buttons="tonal" data-motion>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>GCVolley CAMARA: câmera de scout de vôlei com o seu celular</title>
+<meta name="description" content="Use o seu celular Android como câmera do seu programa de scout e do OBS, por cabo USB ou Wi-Fi. Teste grátis por 15 dias no Windows 11.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="GCVolley CAMARA: câmera de scout para vôlei">
+<meta property="og:description" content="Seu celular Android como câmera de scout, por USB ou Wi-Fi. Teste grátis por 15 dias.">
+<meta property="og:image" content="../share.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="../favicon.png" type="image/png">
+<meta name="theme-color" content="#141a31">
+<!-- <link rel="canonical" href="https://[dominio propio cuando exista]/"> -->
+<link rel="alternate" hreflang="es" href="../">
+<link rel="alternate" hreflang="en" href="../en/">
+<link rel="alternate" hreflang="pt" href="./">
+<meta name="site-kind" content="software">
+<meta name="page-type" content="software">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Host+Grotesk:wght@400..700&family=JetBrains+Mono:wght@400..500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/system.css">
+<link rel="stylesheet" href="../assets/ui/cards.css">
+<link rel="stylesheet" href="../assets/motion/motion.css">
+<link rel="stylesheet" href="../assets/backgrounds/backgrounds.css">
+<link rel="stylesheet" href="../assets/layout/layout.css">
+<link rel="stylesheet" href="../assets/icons/icon.css">
+<style>
+:root {
+  --p-bg: #141a31; --p-surface: #1b2242; --p-ink: #eef0f5; --p-muted: #a7adbc;
+  --p-accent: #5ab9fc; --p-accent-ink: #121830; --p-action: #5ab9fc; --p-action-ink: #121830;
+  --p-inv-bg: #eef0f5; --p-inv-surface: #dcdfe6; --p-inv-ink: #121830; --p-inv-muted: #555c70;
+  --p-inv-accent: #121830; --p-inv-accent-ink: #eef0f5; --p-inv-action: #121830; --p-inv-action-ink: #eef0f5;
+  --font-display: "Host Grotesk", system-ui, sans-serif;
+  --font-text: "Host Grotesk", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+  --display-weight: 500;
+  --display-tracking: -0.035em;
+  --display-tracking-xl: -0.04em;
+}
+</style>
+<script>document.documentElement.classList.add('m-enter');setTimeout(()=>document.documentElement.classList.add('m-enter-done'),700)</script>
+<script src="../assets/backgrounds/backgrounds.js"></script>
+<script>document.documentElement.classList.add('mo-js');setTimeout(()=>document.documentElement.classList.add('mo-safe'),2500)</script>
+<link rel="modulepreload" href="../assets/moments/moments.js">
+<link rel="modulepreload" href="../assets/moments/lib.js">
+<link rel="modulepreload" href="../assets/moments/iris-opens/moment.js">
+<!-- page CSS: the GCVolley CAMARA window (drawn from the real app's layout) and the small screens in the cards -->
+<style>
+  .nav__logo img { height: 52px; width: auto; display: block; }
+  .nav__lang { display: flex; gap: var(--s-2); font-size: 15px; }
+  .nav__lang a { color: var(--muted); text-decoration: none; min-height: 44px; display: inline-flex; align-items: center; padding: 0 4px; }
+  .nav__lang a[aria-current] { color: var(--ink); }
+
+  /* the app window */
+  .gw { background: #1d2333; color: #e9ecf2; border-radius: 12px; overflow: hidden; font: 400 13px/1.4 var(--font-text);
+        box-shadow: 0 0 0 1px rgb(255 255 255 / .09), 0 30px 70px -30px rgb(0 0 0 / .8); text-align: left; }
+  .gw__bar { display: flex; align-items: center; gap: 10px; height: 36px; padding: 0 14px; border-bottom: 1px solid rgb(255 255 255 / .07); color: #a6acb8; font-size: 12px; }
+  .gw__bar b { color: #e9ecf2; font-weight: 500; }
+  .gw__bar .sp { flex: 1; }
+  .gw__body { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr); gap: 12px; padding: 14px; }
+  .gw__card { background: rgb(255 255 255 / .045); border: 1px solid rgb(255 255 255 / .07); border-radius: 8px; padding: 12px 14px; }
+  .gw__col { display: grid; gap: 12px; align-content: start; }
+  .gw__title { font-size: 14px; font-weight: 500; margin: 0 0 8px; }
+  .gw__state { display: flex; align-items: center; gap: 8px; font-weight: 500; font-size: 14px; }
+  .gw__dot { width: 10px; height: 10px; border-radius: 50%; background: #3ecf7a; box-shadow: 0 0 0 4px rgb(62 207 122 / .18); }
+  .gw__rows { display: grid; grid-template-columns: auto 1fr; gap: 6px 14px; margin: 0; }
+  .gw__rows dt { color: #a6acb8; } .gw__rows dd { margin: 0; }
+  .gw__seg { display: flex; gap: 6px; flex-wrap: wrap; }
+  .gw__seg span { padding: 4px 10px; border-radius: 6px; border: 1px solid rgb(255 255 255 / .12); color: #c4c9d3; }
+  .gw__seg span.is-on { background: var(--p-action); color: var(--p-action-ink); border-color: transparent; }
+  .gw__toggle { display: flex; align-items: center; gap: 10px; margin-top: 10px; }
+  .gw__sw { width: 34px; height: 18px; border-radius: 9px; background: var(--p-action); position: relative; flex: none; }
+  .gw__sw::after { content: ""; position: absolute; top: 3px; right: 3px; width: 12px; height: 12px; border-radius: 50%; background: #121830; }
+  .gw__sw.is-off { background: transparent; border: 1px solid rgb(255 255 255 / .35); }
+  .gw__sw.is-off::after { left: 3px; right: auto; top: 2px; background: #c4c9d3; }
+  .gw__preview { position: relative; aspect-ratio: 16 / 9; border-radius: 6px; overflow: hidden; background: #000; }
+  .gw__preview img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .gw__zoom { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 10px; }
+  .gw__track { height: 4px; border-radius: 2px; background: rgb(255 255 255 / .16); position: relative; }
+  .gw__track i { position: absolute; inset: 0 auto 0 0; width: var(--z, 25%); border-radius: 2px; background: var(--p-action); }
+  .gw__track i::after { content: ""; position: absolute; right: -8px; top: -6px; width: 16px; height: 16px; border-radius: 50%; background: #e9ecf2; box-shadow: 0 0 0 4px rgb(90 185 252 / .35); }
+  .gw__btn { display: inline-flex; align-items: center; gap: 8px; height: 34px; padding: 0 16px; border-radius: 6px; background: var(--p-action); color: var(--p-action-ink); font-weight: 500; }
+  .hero__window .gw { position: absolute; z-index: 1; left: 50%; top: var(--s-6); width: min(960px, calc(100% - 2 * var(--s-6))); transform: translateX(-50%); }
+  @media (max-width: 639px) {
+    .hero__window .gw { top: var(--s-4); width: calc(100% - 2 * var(--s-4)); left: var(--s-4); transform: none; }
+    .gw__body { grid-template-columns: 1fr; } .gw__col--side, .gw__col .gw__card { display: none; } .gw__bar .opt { display: none; }
+    .hero--centred .pill .muted { display: none; }
+  }
+
+  /* the small screens inside the cards */
+  #pasos .panel, #funciones .panel { --p-h: 300px; }
+  .mini .gw__card, .mini .smart { box-shadow: 0 24px 50px -24px rgb(10 14 30 / .7); }
+  .mini .gw__title { font-size: 16px; } .mini .gw__card { padding: 20px 22px; font-size: 15px; } .mini .mini-log { font-size: 13px; gap: 10px; } .mini .gw__toggle { margin-top: 14px; }
+  .mini { position: absolute; left: 24px; right: 24px; top: 32px; }
+  .mini .gw__card { background: #1d2333; }
+  .mini-photo { position: absolute; inset: 0; overflow: hidden; }
+  .mini-photo img { width: 100%; height: 100%; object-fit: cover; display: block; transform-origin: 50% 55%; }
+  .mini-photo--z img { transform: scale(1.5); }
+  .mini-log { display: grid; gap: 6px; font-family: var(--font-mono); font-size: 12px; color: #c4c9d3; }
+  .mini-log b { color: #3ecf7a; font-weight: 400; } .mini-log s { color: #f0b45a; text-decoration: none; }
+  .mini-cam { display: flex; flex-direction: column; gap: 6px; font-size: 13px; }
+  .mini-cam span { padding: 8px 12px; border-radius: 6px; border: 1px solid rgb(255 255 255 / .1); color: #c4c9d3; }
+  .mini-cam span.is-on { border-color: var(--p-action); color: #e9ecf2; }
+  .smart { background: #0f5ea8; color: #fff; border-radius: 6px; padding: 16px; font-size: 13px; }
+  .smart b { display: block; font-size: 17px; font-weight: 500; margin-bottom: 8px; }
+  .smart u { text-decoration: underline; }
+  @media (max-width: 639px) { #pasos .panel { --p-h: 200px; } #funciones .panel { --p-h: 170px; } .mini { top: 16px; left: 16px; right: 16px; } }
+  @media (min-width: 640px) and (max-width: 1279px) { #pasos { --h: 2; } }
+  @media (min-width: 640px) and (max-width: 1023px) { #precio { --h: 2; } }
+  @media (max-width: 359px) { .close--type .btn--xl { font-size: 16px; padding-inline: var(--s-4); } }
+  .req { list-style: none; padding: 0; margin: var(--s-5) 0 0; display: grid; gap: var(--s-3); }
+  .buy-panel { --p-h: 372px; margin-top: var(--s-6); }
+  .mini-form { display: grid; gap: 10px; margin-bottom: 16px; }
+  .mini-form span { display: grid; gap: 4px; color: #a6acb8; font-size: 13px; }
+  .mini-form i { font-style: normal; color: #e9ecf2; padding: 8px 10px; border-radius: 6px; border: 1px solid rgb(255 255 255 / .14); font-size: 14px; }
+  .buy { list-style: none; padding: 0; margin: var(--s-6) 0 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--s-5); }
+  .buy li { display: grid; gap: var(--s-3); align-content: start; }
+  @media (max-width: 639px) { .buy { grid-template-columns: 1fr; gap: var(--s-4); } .buy li { grid-template-columns: auto 1fr; align-items: center; } }
+  .faq-photo { margin-top: var(--s-6); aspect-ratio: 4 / 3; border-radius: var(--r-lg); overflow: hidden; }
+  .faq-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  @media (max-width: 639px) { .faq-photo { margin-top: var(--s-4); } }
+  @media (max-width: 639px) { .footer__legal { flex-direction: column; align-items: flex-start; gap: var(--s-2); } .footer__legal .credits { flex-basis: auto; } }
+  .req li { padding-bottom: var(--s-3); border-bottom: 1px solid var(--line); }
+</style>
+</head>
+<body>
+<!-- type: software
+     deal: hero centred, nav nav-mega (one page: plain words, no panel), close close-type, footer footer-statement,
+     rhythm surface-pairs, buttons tonal, mark: the client's own logo, grounds: none (flat brand navy from the logo)
+     moments: iris-opens on #funciones (ground-surface after the page ground) -->
+
+<header class="nav">
+  <div class="wrap nav__bar">
+    <a class="skip-link" href="#top">Pular para o conteúdo</a>
+    <a class="nav__logo" href="#top" aria-label="GCVolley CAMARA, início"><img src="../logo.png" alt="GCVolley CAMARA" width="57" height="52"></a>
+    <nav class="nav__links" aria-label="Principal">
+      <div class="nav__item"><a class="nav__link" href="#pasos">Instalação</a></div>
+      <div class="nav__item"><a class="nav__link" href="#funciones">Funções</a></div>
+      <div class="nav__item"><a class="nav__link" href="#precio">Preço</a></div>
+      <div class="nav__item"><a class="nav__link" href="#preguntas">Perguntas</a></div>
+      <div class="nav__item"><a class="nav__link" href="../" lang="es" hreflang="es">Español</a></div>
+      <div class="nav__item"><a class="nav__link" href="../en/" lang="en" hreflang="en">English</a></div>
+    </nav>
+    <div class="nav__actions">
+      <a class="btn btn--primary" href="https://github.com/sebavsok-star/gcvolley-camara-versiones/releases/latest" data-download>Baixar teste grátis</a>
+    </div>
+    <button class="nav__toggle" type="button" aria-expanded="false" aria-label="Menu">
+      <svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><path d="M2 5h14M2 13h14" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero hero--centred" data-enter aria-labelledby="hero-h">
+    <div class="wrap"><div class="hero-text">
+      <div class="hero__c">
+        <a class="pill" href="#precio"><span>Teste grátis por 15 dias</span><span class="muted">Depois, 25 USD por 6 meses</span></a>
+        <h1 id="hero-h">Câmera de scout para vôlei</h1>
+        <p class="hero__lead">O GCVolley CAMARA transforma o seu celular Android na câmera do seu programa de scout e do OBS, por cabo USB ou Wi-Fi: 1920x1080 a 30 quadros por segundo.</p>
+        <div class="btn-row"><a class="btn btn--primary" href="https://github.com/sebavsok-star/gcvolley-camara-versiones/releases/latest" data-download>Baixar teste grátis<svg class="m-arrow" viewBox="0 0 12 12" aria-hidden="true"><path class="m-arrow__stem" d="M1 6h8"/><path class="m-arrow__head" d="M4.5 2.5 8 6l-3.5 3.5"/></svg></a><a class="btn btn--secondary" href="#pasos">Ver a instalação</a></div>
+      </div>
+      <div class="hero__window" role="img" aria-label="A janela do GCVolley CAMARA transmitindo por cabo USB, com a prévia de uma partida e o zoom em 1,0x">
+        <div class="gw" aria-hidden="true">
+          <div class="gw__bar"><b>GCVolley CAMARA</b><span class="opt">Teste: faltam 15 dias</span><span class="sp"></span><span class="opt">Português</span></div>
+          <div class="gw__body">
+            <div class="gw__col gw__col--side">
+              <div class="gw__card">
+                <div class="gw__state"><span class="gw__dot"></span>Transmitindo</div>
+                <dl class="gw__rows" style="margin-top:10px"><dt>Celular</dt><dd>Samsung A53 · USB</dd><dt>Video</dt><dd>1920x1080 · 30 fps</dd></dl>
+              </div>
+              <div class="gw__card">
+                <p class="gw__title">Conexão com o celular</p>
+                <div class="gw__seg"><span>Automática</span><span class="is-on">Cabo USB</span><span>Wi-Fi</span></div>
+                <div class="gw__toggle"><span class="gw__sw is-off"></span>Modo partida</div>
+              </div>
+            </div>
+            <div class="gw__col">
+              <div class="gw__preview"><img src="../assets/img/photo-f43872803-960.webp" srcset="../assets/img/photo-f43872803-500.webp 500w, ../assets/img/photo-f43872803-960.webp 960w, ../assets/img/photo-f43872803.webp 1280w" sizes="(max-width: 639px) 90vw, 560px" width="960" height="722" alt="" fetchpriority="high" data-source="stand-in" data-subject="partida de vôlei vista da arquibancada"></div>
+              <div class="gw__card">
+                <p class="gw__title">Video</p>
+                <div class="gw__zoom"><span>Zoom</span><span class="gw__track" style="--z: 25%"><i></i></span><b>1,0x</b></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div></div>
+  </section>
+
+  <section class="section" id="pasos" style="--hm: 2" aria-labelledby="pasos-h">
+    <div class="wrap">
+      <div class="section-head">
+        <h2 id="pasos-h">Instalação em 3 passos. <span class="muted">Sem placa de captura e sem app no celular.</span></h2>
+      </div>
+      <div class="grid">
+        <article class="card card--row card--open span-4">
+          <span class="step-num">1</span>
+          <h3>Instale o programa no Windows 11</h3>
+          <p>O Windows avisa que o instalador é novo: escolha “Mais informações” e depois “Executar assim mesmo”.</p>
+          <div class="panel"><div class="mini" aria-hidden="true"><div class="smart"><b>O Windows protegeu o computador</b>Editor: GameCode Volley<br><br><u>Mais informações</u> → Executar assim mesmo</div></div></div>
+        </article>
+        <article class="card card--row card--open span-4">
+          <span class="step-num">2</span>
+          <h3>Prepare o celular Android</h3>
+          <p>O programa guia você para ativar a depuração USB do Android, com os menus da marca do seu celular.</p>
+          <div class="panel"><div class="mini" aria-hidden="true"><div class="gw__card"><p class="gw__title">Como preparo o celular?</p><div class="mini-log"><span>1. Configurações → Sobre o telefone</span><span>2. Toque 7 vezes em “Número da versão”</span><span>3. Opções do desenvolvedor → Depuração USB</span><span><b>Pronto: celular encontrado</b></span></div></div></div></div>
+        </article>
+        <article class="card card--row card--open span-4">
+          <span class="step-num">3</span>
+          <h3>Escolha a câmera no seu programa</h3>
+          <p>Ela aparece como “GCV CAMARA DV”, mais uma câmera, no seu programa de scout e no OBS.</p>
+          <div class="panel"><div class="mini" aria-hidden="true"><div class="gw__card"><p class="gw__title">Câmera</p><div class="mini-cam"><span>Webcam integrada</span><span class="is-on">GCV CAMARA DV</span><span>Câmera virtual do OBS</span></div></div></div></div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section g2 ground-surface" id="funciones" aria-labelledby="funciones-h" data-moment="iris-opens">
+    <div class="wrap">
+      <div class="group">
+        <div class="section-head">
+          <h2 id="funciones-h">Funções para a partida. <span class="muted">Tudo é controlado pelo laptop.</span></h2>
+        </div>
+        <div class="grid">
+          <article class="card card--row card--open span-6">
+            <h3>Zoom de 0,5x a 2,5x pelo laptop</h3>
+            <p>Aproxime ou abra a imagem sem tocar no celular. Abaixo de 1x usa a câmera grande angular.</p>
+            <div class="panel"><div class="mini-photo mini-photo--z"><img src="../assets/img/photo-f43872803.webp" sizes="628px" width="1280" height="962" alt="A mesma partida com zoom: dá para ler os números das camisas" loading="lazy" data-source="stand-in" data-subject="partida de vôlei com zoom"></div></div>
+          </article>
+          <article class="card card--row card--open span-6">
+            <h3>Mantém o Wi-Fi do ginásio conectado</h3>
+            <p>O modo partida impede que o Windows derrube o Wi-Fi ou troque de rede. Ao parar, tudo volta a ser como era.</p>
+            <div class="panel"><div class="mini" aria-hidden="true"><div class="gw__card"><p class="gw__title">Rede Wi-Fi da partida</p><div class="gw__seg"><span class="is-on">Gimnasio-Club</span></div><div class="gw__toggle"><span class="gw__sw"></span>Modo partida: ativado</div></div></div></div>
+          </article>
+        </div>
+      </div>
+      <div class="grid">
+        <article class="card card--row card--open span-6">
+          <h3>Trava a exposição e o foco</h3>
+          <p>Enquadre, espere a imagem ficar boa e trave: ela não muda quando alguém passa na frente da câmera.</p>
+          <div class="panel"><div class="mini" aria-hidden="true"><div class="gw__card"><div class="gw__toggle"><span class="gw__sw"></span>Travar exposição: fixa</div><div class="gw__toggle"><span class="gw__sw"></span>Travar foco: fixo</div><div class="gw__toggle"><span class="gw__sw is-off"></span>Brilho: 0</div></div></div></div>
+        </article>
+        <article class="card card--row card--open span-6">
+          <h3>Volta sozinho se cair</h3>
+          <p>Se o cabo soltar ou o Wi-Fi cair, ele reconecta a cada 2 segundos e avisa o que aconteceu.</p>
+          <div class="panel"><div class="mini" aria-hidden="true"><div class="gw__card"><p class="gw__title">Avisos</p><div class="mini-log"><span>21:14:02 <b>Transmitindo por USB</b></span><span>21:31:47 <s>O cabo foi desconectado</s></span><span>21:31:49 Procurando o celular…</span><span>21:31:53 <b>Transmitindo por Wi-Fi</b></span></div></div></div></div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="precio" style="--hm: 2" aria-labelledby="precio-h">
+    <div class="wrap">
+      <div class="grid grid--top">
+        <div class="span-4">
+          <h2 id="precio-h">Preço</h2>
+          <p class="muted">Uma licença por laptop, com todas as funções.</p>
+          <div class="panel buy-panel"><div class="mini" aria-hidden="true"><div class="gw__card"><p class="gw__title">Comprar licença</p><div class="mini-form"><span>Nome<i>Ana Souza</i></span><span>Clube<i>Clube Esportivo</i></span><span>Forma de pagamento<i>Transferência</i></span></div><span class="gw__btn">Enviar pedido</span></div></div></div>
+        </div>
+        <article class="card card--plan span-4 start-5">
+          <h3>Teste</h3>
+          <p class="muted">Para testar numa partida de verdade.</p>
+          <div class="price"><span class="t-stat">0 USD</span><span class="muted">15 dias</span></div>
+          <a class="btn btn--secondary" href="#pasos">Ver a instalação</a>
+          <ul class="checks"><li>Sem cartão e sem cadastro</li><li>Todas as funções</li><li>Windows 11 e Android 12 ou mais novo</li></ul>
+        </article>
+        <article class="card card--plan span-4 start-9 is-featured">
+          <h3>Licença</h3>
+          <p class="muted">Pedida pelo botão Comprar do programa.</p>
+          <div class="price"><span class="t-stat">25 USD</span><span class="muted">por 6 meses</span></div>
+          <a class="btn btn--secondary" href="mailto:gamecode.volley@gmail.com?subject=Licen%C3%A7a%20GCVolley%20CAMARA">Enviar um e-mail</a>
+          <ul class="checks"><li>Pagamento por transferência, Mercado Pago, PayPal, AstroPay ou Global66</li><li>A licença chega por e-mail</li><li>Para um laptop</li></ul>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="preguntas" style="--hm: 2" aria-labelledby="preguntas-h">
+    <div class="wrap">
+      <div class="grid grid--top">
+        <div class="span-5">
+          <h2 id="preguntas-h">Perguntas</h2>
+          <p class="muted">Outra dúvida? Escreva para nós no Instagram ou por e-mail.</p>
+          <p><a class="link" href="https://www.instagram.com/gamecode.volley/">Ver o Instagram</a></p>
+          <div class="faq-photo"><img src="../assets/img/photo-f34377017-cancha.webp" sizes="519px" width="1280" height="393" alt="Uma partida vista do alto da arquibancada, com a quadra inteira e uma câmera no tripé" loading="lazy" data-source="stand-in" data-subject="partida de vôlei vista do alto da arquibancada"></div>
+        </div>
+        <div class="faq span-7 start-6">
+          <div class="faq__item"><h3>Funciona com iPhone?</h3><p>Não. Só Android 12 ou mais novo; testado com Samsung e Xiaomi.</p></div>
+          <div class="faq__item"><h3>Preciso instalar algo no celular?</h3><p>Não. Ele usa a depuração USB do Android, e o programa guia você para ativá-la.</p></div>
+          <div class="faq__item"><h3>USB ou Wi-Fi?</h3><p>USB é o mais estável. Por Wi-Fi, o laptop e o celular ficam na mesma rede.</p></div>
+          <div class="faq__item"><h3>Com quais programas funciona?</h3><p>Com os que usam uma webcam do Windows, como o OBS e o seu programa de scout.</p></div>
+                    <div class="faq__item"><h3>A licença serve em dois laptops?</h3><p>Não. Cada licença fica vinculada a um laptop.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="footer closing footer--statement" id="contact" aria-labelledby="close-h">
+  <div class="wrap">
+    <div class="closing__cta close--type">
+      <div class="section-head">
+        <h2 id="close-h">Teste na sua próxima partida</h2>
+        <p>15 dias grátis, sem cartão. Depois, 25 USD por 6 meses.</p>
+      </div>
+      <a class="btn btn--primary btn--xl btn--wide" href="https://github.com/sebavsok-star/gcvolley-camara-versiones/releases/latest" data-download>Baixar teste grátis<svg class="m-arrow" viewBox="0 0 12 12" aria-hidden="true"><path class="m-arrow__stem" d="M1 6h8"/><path class="m-arrow__head" d="M4.5 2.5 8 6l-3.5 3.5"/></svg></a>
+    </div>
+    <div class="closing__links">
+      <div class="grid">
+        <div class="span-6 stack-4">
+          <a class="nav__logo" href="#top" aria-label="GCVolley CAMARA, início"><img src="../logo.png" alt="GCVolley CAMARA" width="57" height="52"></a>
+          <p class="footer__lede">A GameCode Volley faz ferramentas para estatísticos de vôlei.</p>
+        </div>
+        <div class="span-2 footer__col"><h3>Programa</h3><ul><li><a href="#pasos">Instalação</a></li><li><a href="#funciones">Funções</a></li><li><a href="#precio">Preço</a></li></ul></div>
+        <div class="span-2 footer__col"><h3>Ajuda</h3><ul><li><a href="#preguntas">Perguntas</a></li><li><a href="mailto:gamecode.volley@gmail.com">E-mail</a></li><li><a href="https://www.instagram.com/gamecode.volley/">Instagram</a></li></ul></div>
+        <div class="span-2 footer__col"><h3>Idioma</h3><ul><li><a href="../" lang="es">Español</a></li><li><a href="../en/" lang="en">English</a></li><li><a href="./" lang="pt">Português</a></li></ul></div>
+      </div>
+      <div class="footer__legal">
+        <span>&copy; 2026 GameCode Volley &nbsp; <a href="https://github.com/sebavsok-star/gcvolley-camara-versiones/blob/main/terminos-pt.txt">Termos e condições</a></span>
+        <a class="credits" href="../credits.html">Fotografias via Wikimedia Commons</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<nav class="actionbar" aria-label="Ação rápida">
+  <a class="btn btn--primary" href="https://github.com/sebavsok-star/gcvolley-camara-versiones/releases/latest" data-download>Baixar teste grátis</a>
+</nav>
+
+<script type="module" src="../assets/system.js"></script>
+<script type="module" src="../assets/motion/motion.js"></script>
+<script type="module" src="../assets/layout/layout.js"></script>
+<!-- the download buttons go straight to the newest installer when GitHub answers; otherwise they open the releases page -->
+<script>
+fetch('https://api.github.com/repos/sebavsok-star/gcvolley-camara-versiones/releases/latest')
+  .then(r => r.ok ? r.json() : null)
+  .then(d => { const a = d && d.assets && d.assets.find(x => /\.exe$/i.test(x.name)); if (a) document.querySelectorAll('[data-download]').forEach(el => el.href = a.browser_download_url); })
+  .catch(() => {});
+</script>
+</body>
+</html>

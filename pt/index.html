@@ -111,6 +111,13 @@
   @media (min-width: 640px) and (max-width: 1279px) { #pasos { --h: 2; } }
   @media (min-width: 640px) and (max-width: 1023px) { #precio { --h: 2; } }
   @media (max-width: 359px) { .close--type .btn--xl { font-size: 16px; padding-inline: var(--s-4); } }
+  .consent { position: fixed; z-index: 60; left: 50%; bottom: calc(16px + var(--bar, 0px)); transform: translateX(-50%); width: min(560px, calc(100% - 32px));
+             display: grid; gap: var(--s-3); padding: var(--s-4) var(--s-5); background: var(--p-surface); color: var(--ink); border: 1px solid var(--line-strong);
+             border-radius: var(--r-md); box-shadow: 0 20px 50px -20px rgb(0 0 0 / .6); font-size: 15px; line-height: 1.5; }
+  .consent[hidden] { display: none; }
+  .consent p { margin: 0; }
+  .consent .btn-row { gap: var(--s-2); }
+  .consent .btn { height: 44px; }
   .req { list-style: none; padding: 0; margin: var(--s-5) 0 0; display: grid; gap: var(--s-3); }
   .buy-panel { --p-h: 372px; margin-top: var(--s-6); }
   .mini-form { display: grid; gap: 10px; margin-bottom: 16px; }
@@ -125,6 +132,15 @@
   @media (max-width: 639px) { .footer__legal { flex-direction: column; align-items: flex-start; gap: var(--s-2); } .footer__legal .credits { flex-basis: auto; } }
   .req li { padding-bottom: var(--s-3); border-bottom: 1px solid var(--line); }
 </style>
+<!-- Microsoft Clarity (estadísticas de visitas). Empieza sin cookies; las activa solo con permiso (ver aviso al final) -->
+<script>
+  (function(c,l,a,r,i,t,y){
+    c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+    t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+    y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+  })(window, document, "clarity", "script", "zf5s0qz2us");
+  window.clarity('consentv2', { ad_Storage: 'denied', analytics_Storage: 'denied' });
+</script>
 </head>
 <body>
 <!-- type: software
@@ -339,6 +355,36 @@ fetch('https://api.github.com/repos/sebavsok-star/gcvolley-camara-versiones/rele
   .then(r => r.ok ? r.json() : null)
   .then(d => { const a = d && d.assets && d.assets.find(x => /\.exe$/i.test(x.name)); if (a) document.querySelectorAll('[data-download]').forEach(el => el.href = a.browser_download_url); })
   .catch(() => {});
+</script>
+<div class="consent" id="consent" role="dialog" aria-live="polite" aria-label="Estatísticas" hidden>
+  <p>Usamos o Microsoft Clarity para saber como esta página é usada. Você aceita cookies de estatísticas?</p>
+  <div class="btn-row"><button class="btn btn--primary" type="button" data-consent="granted">Aceitar</button><button class="btn btn--secondary" type="button" data-consent="denied">Recusar</button></div>
+</div>
+<!-- estadísticas: en Europa se pide permiso antes de usar cookies (se recuerda la respuesta); en el resto se activan
+     directamente. Cada clic en un botón de descarga se cuenta como el evento "descarga". -->
+<script>
+(function () {
+  var lang = document.documentElement.lang.slice(0, 2);
+  var tz = ''; try { tz = Intl.DateTimeFormat().resolvedOptions().timeZone || ''; } catch (e) {}
+  var europa = /^(Europe|Atlantic\/(Canary|Madeira|Azores|Faroe|Reykjavik))\//.test(tz);
+  function set(v) { window.clarity('consentv2', { ad_Storage: 'denied', analytics_Storage: v }); }
+  var saved = null; try { saved = localStorage.getItem('gcv-consent'); } catch (e) {}
+  var box = document.getElementById('consent');
+  if (saved) set(saved);
+  else if (!europa) set('granted');
+  else box.hidden = false;
+  box.addEventListener('click', function (e) {
+    var b = e.target.closest('[data-consent]'); if (!b) return;
+    var v = b.getAttribute('data-consent'); set(v);
+    try { localStorage.setItem('gcv-consent', v); } catch (e2) {}
+    box.hidden = true;
+  });
+  window.clarity('set', 'idioma', lang);
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest('[data-download]');
+    if (a) { window.clarity('event', 'descarga'); window.clarity('set', 'descargo', 'si'); }
+  });
+})();
 </script>
 </body>
 </html>

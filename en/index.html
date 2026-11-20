@@ -111,6 +111,7 @@
   @media (min-width: 640px) and (max-width: 1279px) { #pasos { --h: 2; } }
   @media (min-width: 640px) and (max-width: 1023px) { #precio { --h: 2; } }
   @media (max-width: 359px) { .close--type .btn--xl { font-size: 16px; padding-inline: var(--s-4); } }
+  .hero-mail-note { margin: 0; font-size: 15px; line-height: 1.5; color: var(--muted); max-width: 40ch; }
   .consent { position: fixed; z-index: 60; left: 50%; bottom: calc(16px + var(--bar, 0px)); transform: translateX(-50%); width: min(560px, calc(100% - 32px));
              display: grid; gap: var(--s-3); padding: var(--s-4) var(--s-5); background: var(--p-surface); color: var(--ink); border: 1px solid var(--line-strong);
              border-radius: var(--r-md); box-shadow: 0 20px 50px -20px rgb(0 0 0 / .6); font-size: 15px; line-height: 1.5; }
@@ -349,6 +350,33 @@
 <script type="module" src="../assets/system.js"></script>
 <script type="module" src="../assets/motion/motion.js"></script>
 <script type="module" src="../assets/layout/layout.js"></script>
+<!-- en celular el programa no se puede instalar: los botones de descarga pasan a "Enviar el link a mi correo"
+     (abre el correo con el link listo para mandárselo a uno mismo) y se agrega una línea que lo explica. -->
+<script>
+(function () {
+  var ua = navigator.userAgent || '';
+  var movil = /Android|iPhone|iPad|iPod/i.test(ua) || (navigator.maxTouchPoints > 1 && /Macintosh/.test(ua));
+  if (!movil) return;
+  var T = {
+    es: { btn: 'Enviar el link a mi correo', nota: 'Es un programa para Windows 11: mándate el link y descárgalo en tu computador.',
+          asunto: 'GCVolley CAMARA: link de descarga', cuerpo: 'Descarga la prueba gratis de GCVolley CAMARA (15 días) en tu computador con Windows 11:' },
+    en: { btn: 'Email me the link', nota: 'It is a Windows 11 program: send yourself the link and download it on your computer.',
+          asunto: 'GCVolley CAMARA: download link', cuerpo: 'Download the free GCVolley CAMARA trial (15 days) on your Windows 11 computer:' },
+    pt: { btn: 'Enviar o link para meu e-mail', nota: 'É um programa para Windows 11: envie o link para você e baixe no computador.',
+          asunto: 'GCVolley CAMARA: link para baixar', cuerpo: 'Baixe o teste grátis do GCVolley CAMARA (15 dias) no seu computador com Windows 11:' }
+  }[document.documentElement.lang.slice(0, 2)] || null;
+  if (!T) return;
+  var link = location.origin + location.pathname;
+  var mail = 'mailto:?subject=' + encodeURIComponent(T.asunto) + '&body=' + encodeURIComponent(T.cuerpo + String.fromCharCode(10) + link);
+  document.querySelectorAll('[data-download]').forEach(function (a) {
+    a.removeAttribute('data-download'); a.setAttribute('data-mail', ''); a.href = mail;
+    for (var n = a.firstChild; n; n = n.nextSibling) if (n.nodeType === 3 && n.nodeValue.trim()) { n.nodeValue = T.btn; break; }
+  });
+  var row = document.querySelector('.hero .btn-row');
+  if (row) { var p = document.createElement('p'); p.className = 'hero-mail-note'; p.textContent = T.nota; row.after(p); }
+  document.addEventListener('click', function (e) { if (e.target.closest('[data-mail]') && window.clarity) window.clarity('event', 'link_correo'); });
+})();
+</script>
 <!-- the download buttons go straight to the newest installer when GitHub answers; otherwise they open the releases page -->
 <script>
 fetch('https://api.github.com/repos/sebavsok-star/gcvolley-camara-versiones/releases/latest')
